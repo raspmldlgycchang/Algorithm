@@ -1,0 +1,27 @@
+Top-down 방식으로 이항계수 구하기
+times = n, left = n-k 에서 시작해서 남은 게 없을 때까지 하고,
+하나의 조합이 완성되기 위한 재귀호출 것을 choose 함수 내에서 해서
+bino_coef 에서 그 하나의 조합을 반환하도록 한다.
+
+def bino_coef(n,k):
+	if k>n:
+		return 0
+	# 1
+	cache = [[-1 for _in range(n+1)] for _ in range(n+1)]
+
+	# 2
+	def choose(times, left):
+		# 3
+		if times == 0:
+			return left ==0
+
+		# 4
+		if cache[times][got] != -1:
+			return cache[times][got]
+
+		# 5
+		cache[times][left] = choose(times-1, left) + choose(times-1, left-1)
+		return cache[times][left]
+
+	# 6
+	return choose(n,n-k)

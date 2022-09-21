@@ -1,0 +1,37 @@
+이항계수 구하기 - 동적계획법 
+0번째부터 시작해서 n번째까지 선택 / 선택X 경우를 모두 계산
+-> 주어진 기회를 모두 사용했고 k개가 선택되었다면
+조합이 하나 완성되었다.
+-> 1을 반환, k개가 완성되지 않았다면 0을 반환.
+메모이제이션
+테이블에 지금 필요한 값이 저장되어있다면 테이블의 값ㅇ르 반환
+안 되있다면 재귀호출로 구해야 한다
+이번에 선택하지 않았을 때(times+1 번째에 got개가 선택될 때) +
+이번에 선택했을 때(times+1 번째에 got+1 개가 선택될 때)
+으로 times 번까지 got 개를 선택한 경우의 수를구한다.
+처음 시작은 times = 0, got = 0 이다
+왜냐하면 이제 시작이고 그동안 선택한 것도 없기 때문이다.
+함수가 계속 호출되고 인자가 점점 커지며 결국 n번째 이르게 되고
+그때 선택한 개수가 k인 경우만 합산해서 결과를 내놓게 된다.
+def bino_coef(n,k):
+	if k>n:
+		return 0
+	# 1
+	cache = [[-1 for _in range(n+1)] for _ in range(n+1)]
+	
+	# 2
+	def choose(times, got):
+		# 3
+		if times == n:
+			return got == k
+
+		# 4
+		if cache[times][got] != -1:
+			return cache[times][got]
+
+		# 5
+		cache[times][got] = choose(times+1, got) + choose(times+1, got+1)
+		return cache[times][got]
+
+	# 6
+	return choose(0,0)
